@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tienda de Joyas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+    <nav>
+        <a href="/">Inicio</a>
+        <a href="/productos">Productos</a>
+        <a href="/contacto">Contacto</a>
+    </nav>
+
+    <h1 class="title">Joyeria Millaray</h1>
+    <h2 class="subtitle">Hecho a mano con amor</h2>
+    <p class="descripcion">
+        Joyas de plata italiana artesanal y únicas.
+    </p>
+    <img class="joya" src="{{ url_for('static', filename= 'img/joya1.jpg') }}" alt="Joya">
+
+</body>
+</html>
