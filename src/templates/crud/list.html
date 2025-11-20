@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="products-section" id="admin-productos" style="min-height: 100vh; padding-top: 150px;">
+    <div class="section-header" style="margin-bottom: 40px; text-align: left; max-width: 1200px; margin-left: auto; margin-right: auto; padding: 0 40px;">
+        <h2>Panel de Administración (CRUD)</h2>
+        <p>Aquí puedes gestionar los productos de tu Joyería Millaray.</p>
+        <a href="{{ url_for('product_create') }}" class="btn btn-primary" style="margin-top: 20px;">+ Crear Nuevo Producto</a>
+    </div>
+
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 40px;">
+        <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+            <thead style="background: var(--dark); color: white;">
+                <tr>
+                    <th style="padding: 15px; text-align: left;">ID</th>
+                    <th style="padding: 15px; text-align: left;">Nombre</th>
+                    <th style="padding: 15px; text-align: left;">Descripción</th>
+                    <th style="padding: 15px; text-align: left;">Precio</th>
+                    <th style="padding: 15px; text-align: left;">Imagen</th>
+                    <th style="padding: 15px; text-align: center;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr style="border-bottom: 1px solid #f3f4f6;">
+                    <td style="padding: 15px;">{{ product.id }}</td>
+                    <td style="padding: 15px; font-weight: 600;">{{ product.name }}</td>
+                    <td style="padding: 15px; color: var(--gray); font-size: 0.9rem; max-width: 300px;">{{ product.description | truncate(60) }}</td>
+                    <td style="padding: 15px;">${{ "{:,.0f}".format(product.price).replace(",", "X").replace(".", ",").replace("X", ".") }}</td>
+                    <td style="padding: 15px;"><img src="{{ url_for('static', filename='img/' + product.image_file) }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;"></td>
+                    <td style="padding: 15px; text-align: center;">
+                        <a href="{{ url_for('product_update', product_id=product.id) }}" class="btn btn-secondary" style="padding: 8px 15px; font-size: 0.9rem; margin-right: 10px;">Editar</a>
+                        
+                        <form method="POST" action="{{ url_for('product_delete', product_id=product.id) }}" style="display: inline;" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este producto?');">
+                            <button type="submit" class="btn btn-primary" style="background: #dc2626; padding: 8px 15px; font-size: 0.9rem; border: none;">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if not products %}
+            <p style="text-align: center; margin-top: 40px; color: var(--gray);">No hay productos registrados en la base de datos.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock content %}

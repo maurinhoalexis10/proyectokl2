@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro | Joyería Millaray</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Copia los estilos de la caja de autenticación (auth-container, auth-box, etc.) del login.html */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f3e8ff, #fce7f3);
+        }
+        .auth-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        .auth-box h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        .auth-box input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        /* Estilos para mensajes flash */
+        .flash-message {
+            position: relative !important;
+            margin-bottom: 20px !important;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .flash-danger { background-color: #fca5a5; color: #dc2626; border: 1px solid #f87171; }
+        .flash-success { background-color: #a7f3d0; color: #059669; border: 1px solid #6ee7b7; }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Registro de Usuario</h2>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('register') }}">
+                <input type="text" name="username" placeholder="Elige un Usuario" required>
+                <input type="password" name="password" placeholder="Elige una Contraseña" required>
+                <button type="submit" class="btn btn-primary">Registrarme</button>
+            </form>
+            <div class="auth-links">
+                ¿Ya tienes cuenta? <a href="{{ url_for('login') }}">Iniciar Sesión</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
