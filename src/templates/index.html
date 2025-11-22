@@ -1,1 +1,189 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joyería Millaray | Plata 925 Artesanal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">Millaray</div>
+            <div class="nav-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#productos">Productos</a>
+                <a href="#sobre">Sobre Nosotros</a>
+                <a href="#contacto">Contacto</a>
+                {% if session.es_admin %}
+                    <a href="{{ url_for('admin_dashboard') }}" style="color: #ec4899;">⚙️ Admin</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}" style="color: #dc2626;">Salir</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Icon -->
+    <div class="cart-icon" id="cart-icon">
+        🛒 <span class="cart-count" id="cart-count">0</span>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1>Joyería Millaray</h1>
+            <p class="slogan">Elegancia artesanal en plata 925 italiana — Cada pieza cuenta una historia única</p>
+            <p style="color: #6b7280; margin-bottom: 20px;">¡Bienvenido/a {{ session.usuario_nombre }}! 💎</p>
+            <div class="cta-buttons">
+                <a href="#productos" class="btn btn-primary">
+                    Explorar Colección ✨
+                </a>
+                <a href="#sobre" class="btn btn-secondary">
+                    Nuestra Historia
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="productos">
+        <div class="section-header">
+            <h2>Nuestra Colección</h2>
+            <p>Piezas únicas diseñadas con pasión y craftsmanship excepcional</p>
+        </div>
+
+        <div class="products-grid">
+            {% for producto in productos %}
+            <div class="product-card">
+                <div class="product-image-real">
+                    <img src="{{ url_for('static', filename='img/' + producto.imagen) }}" alt="{{ producto.nombre }}">
+                    <div class="product-badge">{{ producto.tag }}</div>
+                </div>
+                <div class="product-info">
+                    <h3>{{ producto.nombre }}</h3>
+                    <p class="product-description">{{ producto.descripcion }}</p>
+                    <div class="product-footer">
+                        <span class="price">${{ "{:,}".format(producto.precio).replace(',', '.') }}</span>
+                        <button class="add-to-cart" 
+                                data-name="{{ producto.nombre }}" 
+                                data-price="{{ producto.precio }}" 
+                                data-tag="{{ producto.tag }}">
+                            Agregar 🛒
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="sobre">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Sobre Nosotros</h2>
+                <p>En Joyería Millaray nos especializamos en la creación de piezas únicas en plata italiana 925. Cada joya es trabajada artesanalmente con dedicación y pasión por el detalle.</p>
+                <p>Nuestra misión es ofrecer joyas que no solo embellecen, sino que cuentan historias y crean momentos memorables.</p>
+            </div>
+            <div class="about-features">
+                <div class="feature">
+                    <div class="feature-icon">💎</div>
+                    <h4>Plata 925</h4>
+                    <p>Garantía de autenticidad en cada pieza</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎨</div>
+                    <h4>Artesanal</h4>
+                    <p>Diseños únicos hechos a mano</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">✨</div>
+                    <h4>Calidad Premium</h4>
+                    <p>Materiales de la más alta calidad</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🚚</div>
+                    <h4>Envío Seguro</h4>
+                    <p>Entrega protegida a todo Chile</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Panel -->
+    <div class="cart-panel" id="cart-panel">
+        <div class="cart-header">
+            <h3>Mi Carrito</h3>
+            <button class="close-cart" id="close-cart">×</button>
+        </div>
+        <ul class="cart-items" id="cart-items">
+            <div class="empty-cart">
+                <div class="empty-cart-icon">🛒</div>
+                <p>Tu carrito está vacío</p>
+            </div>
+        </ul>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span>$<span id="cart-total">0</span></span>
+            </div>
+            <button class="checkout-btn" id="checkout">Finalizar Compra</button>
+        </div>
+    </div>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/56912345678" class="whatsapp-float" target="_blank" title="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Instagram Float -->
+    <a href="https://instagram.com/joyeriamillaray" class="instagram-float" target="_blank" title="Instagram">
+        <i class="fab fa-instagram"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Joyería Millaray</h3>
+                <p>Creando momentos especiales con joyas artesanales de plata italiana 925.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/joyeriamillaray" target="_blank" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://wa.me/56912345678" target="_blank" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://facebook.com/joyeriamillaray" target="_blank" title="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces</h3>
+                <p><a href="#inicio" style="color: #9ca3af; text-decoration: none;">Inicio</a></p>
+                <p><a href="#productos" style="color: #9ca3af; text-decoration: none;">Productos</a></p>
+                <p><a href="#sobre" style="color: #9ca3af; text-decoration: none;">Sobre Nosotros</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p><i class="fas fa-envelope"></i> info@joyeriamillaray.cl</p>
+                <p><i class="fab fa-whatsapp"></i> +56 9 1234 5678</p>
+                <p><i class="fas fa-map-marker-alt"></i> Penco, Biobío, Chile</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Joyería Millaray. Todos los derechos reservados. Hecho con 💜 en Chile</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+
+</body>
+</html>
