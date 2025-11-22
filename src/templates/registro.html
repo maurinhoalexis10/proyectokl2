@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - Joyería Millaray</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -18,24 +18,47 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #fce7f3 0%, #f3e8ff 50%, #ddd6fe 100%);
+            background: linear-gradient(135deg, #fff5fc 0%, #ffe8f7 30%, #ffd4f0 60%, #ffc0e8 100%);
             padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 107, 203, 0.2), transparent);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+            filter: blur(60px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(40px, -40px); }
         }
 
         .registro-container {
-            background: white;
-            padding: 50px 40px;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-            max-width: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 55px 45px;
+            border-radius: 35px;
+            box-shadow: 0 25px 70px rgba(255, 107, 203, 0.25);
+            max-width: 520px;
             width: 100%;
+            z-index: 1;
             animation: fadeInUp 0.8s ease;
+            border: 2px solid rgba(255, 255, 255, 0.5);
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
             }
             to {
                 opacity: 1;
@@ -45,102 +68,128 @@
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 3rem;
+            font-weight: 800;
             text-align: center;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #c084fc, #ec4899);
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ff6bcb, #c084fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -1px;
         }
 
         .subtitle {
             text-align: center;
             color: #6b7280;
-            margin-bottom: 40px;
-            font-size: 0.95rem;
+            margin-bottom: 45px;
+            font-size: 1rem;
+            font-weight: 400;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 28px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #1f2937;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #2d1b3d;
             font-size: 0.95rem;
         }
 
         input {
             width: 100%;
-            padding: 14px 18px;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
+            padding: 16px 20px;
+            border: 2px solid #ffc0e8;
+            border-radius: 15px;
             font-size: 15px;
             transition: all 0.3s ease;
             font-family: 'Poppins', sans-serif;
+            background: rgba(255, 255, 255, 0.8);
         }
 
         input:focus {
             outline: none;
-            border-color: #c084fc;
-            box-shadow: 0 0 0 4px rgba(192, 132, 252, 0.1);
+            border-color: #ff6bcb;
+            box-shadow: 0 0 0 4px rgba(255, 107, 203, 0.15);
+            background: white;
         }
 
         .btn {
             width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #c084fc, #ec4899);
+            padding: 18px;
+            background: linear-gradient(135deg, #ff6bcb, #c084fc);
             color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 15px;
+            font-size: 17px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 15px;
+            box-shadow: 0 12px 35px rgba(255, 107, 203, 0.4);
+            letter-spacing: 0.5px;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 18px 50px rgba(255, 107, 203, 0.5);
         }
 
         .links {
             text-align: center;
-            margin-top: 25px;
+            margin-top: 30px;
+        }
+
+        .links p {
+            color: #6b7280;
+            font-size: 0.95rem;
         }
 
         .links a {
-            color: #c084fc;
+            color: #ff6bcb;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 700;
+            transition: all 0.3s ease;
         }
 
         .links a:hover {
+            color: #c084fc;
             text-decoration: underline;
         }
 
         .alert {
-            padding: 14px 18px;
-            border-radius: 12px;
-            margin-bottom: 20px;
+            padding: 16px 22px;
+            border-radius: 15px;
+            margin-bottom: 25px;
             font-size: 14px;
+            font-weight: 500;
+            animation: slideInDown 0.5s ease;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .alert-danger {
-            background: #fee;
+            background: linear-gradient(135deg, #fee, #fdd);
             color: #dc2626;
-            border-left: 4px solid #dc2626;
+            border-left: 5px solid #dc2626;
         }
 
         .alert-success {
-            background: #d1fae5;
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
             color: #059669;
-            border-left: 4px solid #059669;
+            border-left: 5px solid #059669;
         }
 
         .password-requirements {
@@ -149,9 +198,38 @@
             margin-top: 8px;
             padding-left: 5px;
         }
+
+        .decorative-circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .circle-1 {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #ff6bcb, transparent);
+            top: 10%;
+            left: 5%;
+            filter: blur(40px);
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #c084fc, transparent);
+            bottom: 15%;
+            right: 10%;
+            filter: blur(50px);
+            animation-delay: -5s;
+        }
     </style>
 </head>
 <body>
+    <div class="decorative-circle circle-1"></div>
+    <div class="decorative-circle circle-2"></div>
+
     <div class="registro-container">
         <h1 class="logo">Millaray</h1>
         <p class="subtitle">Crea tu cuenta y descubre nuestra colección</p>
@@ -169,26 +247,26 @@
         <form method="POST">
             <div class="form-group">
                 <label for="nombre">Nombre completo</label>
-                <input type="text" id="nombre" name="nombre" required placeholder="María García">
+                <input type="text" id="nombre" name="nombre" required placeholder="María García" autocomplete="name">
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required placeholder="maria@email.com">
+                <input type="email" id="email" name="email" required placeholder="maria@email.com" autocomplete="email">
             </div>
 
             <div class="form-group">
                 <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" required placeholder="••••••••">
+                <input type="password" id="password" name="password" required placeholder="••••••••" autocomplete="new-password">
                 <p class="password-requirements">Mínimo 6 caracteres</p>
             </div>
 
             <div class="form-group">
                 <label for="confirmar_password">Confirmar contraseña</label>
-                <input type="password" id="confirmar_password" name="confirmar_password" required placeholder="••••••••">
+                <input type="password" id="confirmar_password" name="confirmar_password" required placeholder="••••••••" autocomplete="new-password">
             </div>
 
-            <button type="submit" class="btn">Crear Cuenta</button>
+            <button type="submit" class="btn">Crear Cuenta ✨</button>
         </form>
 
         <div class="links">

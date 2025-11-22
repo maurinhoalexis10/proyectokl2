@@ -4,7 +4,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 import os
 
-app = Flask(__name__)  # ← Sin src/ porque moviste las carpetas
+# Configurar Flask para buscar en src/
+app = Flask(__name__, 
+            template_folder='src/templates',
+            static_folder='src/static')
+
 app.config['SECRET_KEY'] = 'tu_clave_secreta_super_segura_2025'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///joyeria.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -36,7 +40,7 @@ class Producto(db.Model):
         return f'<Producto {self.nombre}>'
 
 
-# ==================== DECORADOR PARA RUTAS PROTEGIDAS ====================
+# ==================== DECORADORES ====================
 
 def login_requerido(f):
     @wraps(f)
@@ -96,7 +100,6 @@ def registro():
         password = request.form.get('password')
         confirmar = request.form.get('confirmar_password')
         
-        # Validaciones
         if Usuario.query.filter_by(email=email).first():
             flash('Este email ya está registrado', 'danger')
             return redirect(url_for('registro'))
@@ -109,7 +112,6 @@ def registro():
             flash('La contraseña debe tener al menos 6 caracteres', 'danger')
             return redirect(url_for('registro'))
         
-        # Crear usuario
         nuevo_usuario = Usuario(
             nombre=nombre,
             email=email,
@@ -288,22 +290,22 @@ def crear_productos_iniciales():
     if Producto.query.count() == 0:
         productos = [
             Producto(
-                nombre='Collar de Plata',
-                descripcion='Elegante collar artesanal en plata italiana 925, diseño minimalista perfecto para cualquier ocasión.',
+                nombre='Collar de Plata Elegante',
+                descripcion='Hermoso collar artesanal en plata italiana 925, diseño minimalista y sofisticado.',
                 precio=8000,
                 tag='Plata 925',
                 imagen='joya1.jpg'
             ),
             Producto(
-                nombre='Collar Dorado',
-                descripcion='Sofisticado collar con baño de oro sobre plata 925, brillo excepcional y terminación impecable.',
-                precio=8000,
-                tag='Plata 925',
+                nombre='Collar Dorado Premium',
+                descripcion='Sofisticado collar con baño de oro 18k sobre plata 925, brillo excepcional.',
+                precio=12000,
+                tag='Baño de Oro',
                 imagen='joya2.jpg'
             ),
             Producto(
-                nombre='Aros Rojos',
-                descripcion='Delicados aros con detalles en rojo, combinación perfecta de color y elegancia en plata italiana.',
+                nombre='Aros Crystal Rose',
+                descripcion='Delicados aros con cristales rosados en plata italiana auténtica.',
                 precio=5000,
                 tag='Plata 925',
                 imagen='joya3.jpg'
@@ -323,4 +325,8 @@ if __name__ == '__main__':
         crear_admin_inicial()
         crear_productos_iniciales()
     
-    app.run(debug=True)
+    print('\n🚀 Servidor iniciado en: http://127.0.0.1:5000')
+    print('👤 Usuario admin: admin@joyeria.com')
+    print('🔑 Contraseña: admin123\n')
+    
+    app.run(debug=True, host='0.0.0.0', port=5000)
